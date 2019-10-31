@@ -2,11 +2,16 @@
 
 require('../models/wallet.model')
 const repository = require('../bin/base/repository.base')
+const mongoose = require('mongoose')
 
 class walletRepository {
 
     constructor() {
         this._base = new repository('wallet')
+    }
+
+    async isMongooseValid(objectId) {       
+        return mongoose.Types.ObjectId.isValid(objectId)
     }
 
     async isUserWalletExist(User) {

@@ -13,6 +13,10 @@ const variables = {
             useNewUrlParser: true, 
             useUnifiedTopology: true        
         }
+    },
+
+    Security: {
+        publicKey: '434735bf4efe7975dc81edac37b0bbc8|d3627aa74146d459446df5113d3c82ab'
     }
 }
 

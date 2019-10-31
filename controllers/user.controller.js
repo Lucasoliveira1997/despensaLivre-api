@@ -4,9 +4,33 @@ const validation = require('../bin/helpers/validation')
 const controllerBase = require('../bin/base/controller.base')
 const repository = require('../repositories/user.repository')
 const md5 = require('md5')
+const jwt = require('jsonwebtoken')
+const variables = require('../bin/configuration/variables')
 
 class userController {
     constructor(){}
+
+    async authenticate(req, resp) {
+        validation.clear()
+        validation.isRequired(req.body.email, 'Informe seu email')
+        validation.isEmail(req.body.email, 'Endereço de email inválido')
+        validation.isRequired(req.body.password, 'Informe sua senha')
+
+        if(!validation.isValid()){
+            resp.status(400).send({validation: validation.errors()})            
+            return
+        }
+
+        let userAuthorized = await repository.authenticate(req.body.email, req.body.password)
+        if(userAuthorized) {
+            resp.status(200).send({
+                user: userAuthorized,
+                token: jwt.sign({user: userAuthorized}, variables.Security.publicKey)
+            })
+        } else {
+            resp.status(400).send({message: "Usuário e senha incorretos!"})
+        }
+    }
 
     async post(req, resp) {
         validation.clear()

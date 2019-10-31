@@ -3,11 +3,12 @@
 const express = require('express')
 const router = express.Router()
 const _ctrl = require('../controllers/product.controller')
+const _auth = require('../middlewares/authentication')
 
-router.post('/', _ctrl.post)
-router.put('/:id', _ctrl.put)
-router.get('/', _ctrl.get)
-router.get('/:id', _ctrl.getById)
-router.delete('/:id', _ctrl.delete)
+router.post('/', _auth,  _ctrl.post)
+router.put('/:id', _auth,  _ctrl.put)
+router.get('/', _auth,  _ctrl.get)
+router.get('/:id', _auth,  _ctrl.getById)
+router.delete('/:id', _auth,  _ctrl.delete)
 
 module.exports = router

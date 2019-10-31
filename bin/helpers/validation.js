@@ -1,9 +1,17 @@
 'use strict'
 
+const mongoose = require('mongoose')
+
 class ValidationContract {
     constructor() {
         this._errors = []
     }
+
+    isNotObjectId(objectId, message) {      
+        if (objectId == false)
+            this._errors.push({message: message})
+    }
+
     isNotArrayOrEmpty(value, message) {
         if (!value && value.length == 0)
             this._errors.push({ message: message })
