@@ -13,9 +13,8 @@ class walletController {
         validation.isRequired(req.body.user, 'Informe o usuário')
 
         let isObjectIdValid = await repository.isMongooseValid(req.body.user)
-
         if(isObjectIdValid == false) {
-            console.log(typeof isObjectIdValid)                   
+            return validation.errors()
         }
 
         if(req.body.user) {

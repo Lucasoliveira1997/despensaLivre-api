@@ -11,11 +11,23 @@ class walletRepository {
     }
 
     async isMongooseValid(objectId) {       
-        return mongoose.Types.ObjectId.isValid(objectId)
+        try {
+            console.log('Veio no Try e deu Certo', error)
+            return mongoose.Types.ObjectId.isValid(objectId)
+        } catch (error) {
+            console.log('Deu errinho mesmo isMongooseValid', error)            
+        }
+        
     }
 
     async isUserWalletExist(User) {
-        return await this._base._model.findOne({user: User})
+        try {
+            console.log('Veio no Try e deu Certo', error)
+            return await this._base._model.findOne({user: User})
+        } catch (error) {
+            console.log('Deu desastre mesmo isUserWalletExist', error)
+        }
+        
     }
 
     async isUserValid(Id) {     
