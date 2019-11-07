@@ -12,25 +12,22 @@ class walletController {
         validation.isRequired(req.body.availableBalance, 'Informe o saldo da conta')
         validation.isRequired(req.body.user, 'Informe o usuário')
 
-        let isObjectIdValid = await repository.isMongooseValid(req.body.user)
-        if(isObjectIdValid == false) {
-            return validation.errors()
+        if(req.body.user) {
+            let isObjectIdValid = await repository.isMongooseValid(req.body.user)
+            console.log(isObjectIdValid)            
+            validation.isNotObjectId(isObjectIdValid, 'Usuário Inválido')
         }
 
         if(req.body.user) {
-            let isUserWalletExist = await repository.isUserWalletExist(req.body.user)                
-
-            console.log(isObjectIdValid)                             
-
-            validation.isNotObjectId(isObjectIdValid, 'Usuário Inválido')  
-            validation.isTrue(isUserWalletExist, 'Um usuário pode ter apenas uma carteira')   
+            let isUserWalletExist = await repository.isUserWalletExist(req.body.user) 
+            validation.isTrue(isUserWalletExist, 'Um usuário pode ter apenas uma carteira') 
         }
 
         if(req.body.availableBalance) {
             validation.isTrue(req.body.availableBalance < 0, 'O saldo não pode ser negativo')
         }
 
-        controllerBase.post(repository, validation, req, resp)
+        controllerBase.post(repository, validation, req, resp)        
     }
 
     async put(req, resp) {
