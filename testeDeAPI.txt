@@ -1,0 +1,38 @@
+//teste ADVERTISEMENT
+{
+	"product": "",
+	"quantity": "",
+	"validity": "",
+	"user": "",
+	"unitPrice": "",
+	"totalPrice": ""
+}
+
+//teste CONDOMINIUM
+{
+	"description": "",
+	"condominiumType": "",
+	"cep": "",
+	"address": "",
+	"state": "",
+	"city": "",
+	"country": "",
+	"neighborhood": "",
+	"responsible": "",
+	"phone": ""
+}
+
+//teste USER
+{
+	"name": "",
+	"email": "",
+	"password": "",
+	"cpf": "",
+	"condominium": "5db234c4cc9aa724ec6f7c17"
+}
+
+//teste WALLET - está aceitando letras, 
+{
+	"availableBalance": "",
+	"user": "5db23521cc9aa724ec6f7c18"
+}
