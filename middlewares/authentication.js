@@ -17,7 +17,7 @@ module.exports = (req, resp, next) => {
             resp.status(401).send({message: 'Token inválido'})
         }
     } else {
-        resp.status(401).send({message: 'Acesso Negado!'})
+        resp.status(403).send({message: 'Acesso Negado!'})
         return
     }
 }

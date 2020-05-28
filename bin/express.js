@@ -24,10 +24,10 @@ mongoose.set('useCreateIndex', true)
     mongoose.connection.on('error', () => console.log('Database connection Failed'))
 
 
-app.use('/api/user', userRoute)
-app.use('/api/condominium', condominiumRoute)
-app.use('/api/product', productRoute)
-app.use('/api/wallet', walletRoute)
-app.use('/api/advertisement', advertisementRoute)
+app.use('/api/users', userRoute)
+app.use('/api/condominiums', condominiumRoute)
+app.use('/api/products', productRoute)
+app.use('/api/wallets', walletRoute)
+app.use('/api/advertisements', advertisementRoute)
 
 module.exports = app

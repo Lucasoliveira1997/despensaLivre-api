@@ -13,7 +13,7 @@ class controllerBase {
             }
 
             let result = await respository.create(req.body)
-            resp.status(200).send({result})
+            resp.status(201).send({result})
         } catch (error) {
             console.log('erro no post', error)            
             resp.status(500).send({message: `erro no processamento: motivos`, erro: error})

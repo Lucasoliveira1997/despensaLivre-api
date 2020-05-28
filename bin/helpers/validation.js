@@ -7,9 +7,9 @@ class ValidationContract {
         this._errors = []
     }
 
-    isNotObjectId(objectId, message) {      
+    isNotObjectId(objectId, message) {
         if (objectId == false)
-            this._errors.push({message: message})
+            this._errors.push({ message: message })
     }
 
     isNotArrayOrEmpty(value, message) {
@@ -57,6 +57,42 @@ class ValidationContract {
 
     isValid() {
         return this._errors.length == 0
+    }
+
+    isCpf(cpf, message) {
+        let sum, rest
+
+        if (cpf == undefined || cpf.trim().length === 0 || cpf === "00000000000") {
+            return this._errors.push({ message: message })
+        }
+        cpf = cpf.replace('.', '').replace('.', '').replace('-', '')
+
+        sum = 0
+        for (let i = 1; i <= 9; i++) {
+            sum = sum + parseInt(cpf.substring(i - 1, i)) * (11 - i)
+        }
+        rest = (sum * 10) % 11
+
+        if ((rest === 10) || (rest === 11)) {
+            rest = 0
+        }
+        if (rest !== parseInt(cpf.substring(9, 10))) {
+            return this._errors.push({ message: message })
+        }
+
+        sum = 0
+        for (let i = 1; i <= 10; i++) {
+            sum = sum + parseInt(cpf.substring(i - 1, i)) * (12 - i)
+        }
+        rest = (sum * 10) % 11
+
+        if ((rest === 10) || (rest === 11)) {
+            rest = 0
+        }
+        if (rest !== parseInt(cpf.substring(10, 11))) {
+            return this._errors.push({ message: message })
+        }
+        return true
     }
 }
 

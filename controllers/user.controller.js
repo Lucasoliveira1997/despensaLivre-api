@@ -38,11 +38,10 @@ class userController {
         validation.isRequired(req.body.email, 'Informe o Email')
         validation.isEmail(req.body.email, 'O email informado não é válido')
         validation.isRequired(req.body.password, 'Informe a senha')
-        validation.isRequired(req.body.confirmedPassword, 'Confirme a senha')
-        console.log(`original - ${req.body.password}`)
-        console.log(`confirmação - ${req.body.confirmedPassword}`)                
+        validation.isRequired(req.body.confirmedPassword, 'Confirme a senha')              
         validation.isTrue(req.body.password != req.body.confirmedPassword, 'As senha informadas não são iguais')
         validation.isRequired(req.body.cpf, 'Infome o CPF')
+        validation.isCpf(req.body.cpf, 'CPF inválido')
 
         let IsUserEmailExist = await repository.isEmailExist(req.body.email)
         if (IsUserEmailExist) {
@@ -67,8 +66,9 @@ class userController {
         validation.isRequired(req.body.email, 'Informe o Email')
         validation.isEmail(req.body.email, 'O email informado não é válido')
         validation.isRequired(req.body.cpf, 'Infome o CPF')
+        validation.isCpf(req.body.cpf, 'CPF inválido')
         validation.isRequired(req.body.condominium, 'Informe o condominium')
-        validation.isRequired(req.params.id, 'É neecssário informar um ID a ser atualizado')
+        validation.isRequired(req.params.id, 'É necessário informar um ID a ser atualizado')
 
         let IsUserEmailExist = await repository.isEmailExist(req.body.email)
         if (IsUserEmailExist) {
