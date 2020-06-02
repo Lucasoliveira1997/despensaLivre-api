@@ -10,10 +10,6 @@ class walletRepository {
         this._base = new repository('wallet')
     }
 
-    async isMongooseValid(objectId) {       
-        return await mongoose.Types.ObjectId.isValid(objectId)        
-    }
-
     async isUserWalletExist(User) {
         return await (this._base._model.findOne({user: User}) && mongoose.Types.ObjectId.isValid(User))
     }

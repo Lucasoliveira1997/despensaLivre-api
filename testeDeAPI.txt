@@ -34,5 +34,5 @@
 //teste WALLET - está aceitando letras, 
 {
 	"availableBalance": "",
-	"user": "5db23521cc9aa724ec6f7c18"
+	"user": "5ecfb9a3660ccd20381f011b"
 }

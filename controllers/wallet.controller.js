@@ -11,12 +11,7 @@ class walletController {
         validation.clear()
         validation.isRequired(req.body.availableBalance, 'Informe o saldo da conta')
         validation.isRequired(req.body.user, 'Informe o usuário')
-
-        if(req.body.user) {
-            let isObjectIdValid = await repository.isMongooseValid(req.body.user)
-            console.log(isObjectIdValid)            
-            validation.isNotObjectId(isObjectIdValid, 'Usuário Inválido')
-        }
+        validation.isNotObjectId(req.params.id, 'Usuário não encontrado')
 
         if(req.body.user) {
             let isUserWalletExist = await repository.isUserWalletExist(req.body.user) 
@@ -34,6 +29,7 @@ class walletController {
         validation.clear()
         validation.isRequired(req.body.availableBalance, 'Informe o saldo da conta')
         validation.isRequired(req.body.user, 'Informe o usuário')
+        validation.isNotObjectId(req.params.id, 'Usuário não encontrado')
 
         if(req.body.availableBalance) {
             validation.isTrue(req.body.availableBalance < 0, 'O saldo não pode ser negativo')
