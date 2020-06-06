@@ -17,7 +17,11 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 
-mongoose.connect(variables.database.connection, variables.database.options)
+console.log(typeof variables.database.options);
+
+mongoose.connect('mongodb://despensalivre:RBvqSwXZY5BcNZ39@cluster0-shard-00-00-ffuac.mongodb.net:27017,cluster0-shard-00-01-ffuac.mongodb.net:27017,cluster0-shard-00-02-ffuac.mongodb.net:27017/despensalivretest?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority', {useNewUrlParser: true })
+
+
 mongoose.set('useCreateIndex', true)
     mongoose.connection.on('connected', () => console.log('Database Connected'))
     mongoose.connection.on('disconnected', () => console.log('Database Disconnected'))
