@@ -14,8 +14,7 @@ class walletRepository {
         return await (this._base._model.findOne({user: User}) && mongoose.Types.ObjectId.isValid(User))
     }
 
-    async isUserValid(Id) {     
-        console.log('Chegou aqui')        
+    async isUserValid(Id) {          
         return await this._base._model.findOne({id: Id})
     }
 

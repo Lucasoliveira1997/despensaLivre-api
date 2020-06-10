@@ -2,9 +2,8 @@
 
 module.exports = (validation, resp) => {
     if(!validation.isValid()) {
-        resp.status(400).send(
-            {validation: validation.errors()}
-        ).end
-        return
+        return resp.status(400).send({validation: validation.errors()})
+    } else {
+        return resp.status(200)
     }
 }

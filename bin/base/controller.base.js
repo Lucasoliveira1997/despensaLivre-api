@@ -7,7 +7,8 @@ class controllerBase {
 
     async post(respository, validation, req, resp) {
         try {
-            verifyValidation(validation, resp)
+            let retorno = await verifyValidation(validation, resp)
+            if(retorno.statusCode === 400) return                                
 
             let result = await respository.create(req.body)
             resp.status(201).send({result})
@@ -19,7 +20,8 @@ class controllerBase {
 
     async put(respository, validation, req, resp) {
         try {
-            verifyValidation(validation, resp)
+            let retorno = await verifyValidation(validation, resp)
+            if(retorno.statusCode === 400) return
             
             let result = await respository.update(req.params.id, req.body)
             resp.status(202).send(result)
