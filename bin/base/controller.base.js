@@ -1,16 +1,13 @@
 'use strict'
 
+const verifyValidation = require('../../middlewares/verifyValidation')
+
 class controllerBase {
     constructor(){}
 
     async post(respository, validation, req, resp) {
         try {
-            if(!validation.isValid()) {
-                resp.status(400).send(
-                    {validation: validation.errors()}
-                ).end
-                return
-            }
+            verifyValidation(validation, resp)
 
             let result = await respository.create(req.body)
             resp.status(201).send({result})
@@ -22,12 +19,7 @@ class controllerBase {
 
     async put(respository, validation, req, resp) {
         try {
-            if(!validation.isValid()) {
-                resp.status(400).send(                    
-                    {validation: validation.errors()}
-                ).end
-                return
-            }
+            verifyValidation(validation, resp)
             
             let result = await respository.update(req.params.id, req.body)
             resp.status(202).send(result)

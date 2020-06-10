@@ -48,17 +48,6 @@ class ValidationContract {
             this._errors.push({ message })
     }
 
-    errors() {
-        return this._errors
-    }
-
-    clear() {
-        this._errors = []
-    }
-
-    isValid() {
-        return this._errors.length == 0
-    }
 
     isCpf(cpf, message) {
         let sum, rest
@@ -94,6 +83,18 @@ class ValidationContract {
             return this._errors.push({ message })
         }
         return true
+    }
+    
+    errors() {
+        return this._errors
+    }
+
+    clear() {
+        this._errors = []
+    }
+
+    isValid() {
+        return this._errors.length == 0
     }
 }
 
