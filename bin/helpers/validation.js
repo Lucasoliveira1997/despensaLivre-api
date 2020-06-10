@@ -48,7 +48,6 @@ class ValidationContract {
             this._errors.push({ message })
     }
 
-
     isCpf(cpf, message) {
         let sum, rest
 

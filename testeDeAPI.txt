@@ -32,7 +32,7 @@
 	"condominium": ""
 }
 
-//teste WALLET - está aceitando letras, 
+//teste WALLET - está aceitando letras no Balance, 
 {
 	"availableBalance": "",
 	"user": "5ecfb9a3660ccd20381f011b"

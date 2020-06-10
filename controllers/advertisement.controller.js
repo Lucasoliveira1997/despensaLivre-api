@@ -44,11 +44,11 @@ class advertisementController {
     }
 
     async getById(req, resp) {
-        return await controllerBase.getById(repository, req, resp)
+        return await controllerBase.getById(repository, validation, req, resp)
     }
 
     async delete(req, resp) {
-        return await controllerBase.delete(repository, req, resp)
+        return await controllerBase.delete(repository, validation, req, resp)
     }
 
 }

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const objectId = mongoose.Types.ObjectId
 
 const walletSchema = new Schema({
-    availableBalance:  {type: String, required: true, trim: true, index: true},
+    availableBalance:  {type: Number, required: true, trim: true, index: true, min: 0},
     user: {type: objectId, required: true, ref: 'user', unique: true, trim: true, index: true}
 })
 
