@@ -12,16 +12,29 @@ class userController {
 
     async authenticate(req, resp) {
         validation.clear()
-        validation.isRequired(req.body.email, 'Informe seu email')
-        validation.isEmail(req.body.email, 'Endereço de email inválido')
+        validation.isRequired(req.body.cpf || req.body.email, 'Informe seu Email ou Cpf')
         validation.isRequired(req.body.password, 'Informe sua senha')
+        let hashPassword = md5(req.body.password)
+        let login = {}
+        
+        if(req.body.cpf) {
+            validation.isCpf(req.body.cpf, 'Cpf inválido')
+            login = {cpf: req.body.cpf, password: hashPassword}
+        }
+        if(req.body.email) {
+            validation.isEmail(req.body.email, 'Email Inválido')
+            login = {email: req.body.email, password: hashPassword}
+        }
 
         if(!validation.isValid()){
             resp.status(400).send({validation: validation.errors()})            
             return
         }
 
-        let userAuthorized = await repository.authenticate(req.body.email, req.body.password)
+        
+
+
+        let userAuthorized = await repository.authenticate(login)
         if(userAuthorized) {
             resp.status(200).send({
                 user: userAuthorized,
