@@ -42,8 +42,11 @@ class controllerBase {
         }
     }
 
-    async getById(repository, req, resp) {
+    async getById(repository, validation, req, resp) {
         try {
+            let retorno = await verifyValidation(validation, resp)
+            if(retorno.statusCode === 400) return
+
             if(req.params.id) {
                 let result = await repository.getById(req.params.id)
                 resp.status(200).send(result)
@@ -57,8 +60,11 @@ class controllerBase {
         }
     }
 
-    async delete(repository, req, resp) {
+    async delete(repository, validation, req, resp) {
         try {
+            let retorno = await verifyValidation(validation, resp)
+            if(retorno.statusCode === 400) return
+
             if(req.params.id) {
                 let result = await repository.delete(req.params.id)
                 resp.status(200).send({message: 'Registro excluído com sucesso'})

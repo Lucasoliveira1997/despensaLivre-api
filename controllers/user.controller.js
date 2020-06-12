@@ -6,9 +6,10 @@ const repository = require('../repositories/user.repository')
 const md5 = require('md5')
 const jwt = require('jsonwebtoken')
 const variables = require('../bin/configuration/variables')
+const verifyValidation = require('../middlewares/verifyValidation')
 
 class userController {
-    constructor(){}
+    constructor() { }
 
     async authenticate(req, resp) {
         validation.clear()
@@ -16,32 +17,27 @@ class userController {
         validation.isRequired(req.body.password, 'Informe sua senha')
         let hashPassword = md5(req.body.password)
         let login = {}
-        
-        if(req.body.cpf) {
+
+        if (req.body.cpf) {
             validation.isCpf(req.body.cpf, 'Cpf inválido')
-            login = {cpf: req.body.cpf, password: hashPassword}
+            login = { cpf: req.body.cpf, password: hashPassword }
         }
-        if(req.body.email) {
+        if (req.body.email) {
             validation.isEmail(req.body.email, 'Email Inválido')
-            login = {email: req.body.email, password: hashPassword}
+            login = { email: req.body.email, password: hashPassword }
         }
 
-        if(!validation.isValid()){
-            resp.status(400).send({validation: validation.errors()})            
-            return
-        }
-
-        
-
+        let retorno = await verifyValidation(validation, resp)
+        if (retorno.statusCode === 400) return
 
         let userAuthorized = await repository.authenticate(login)
-        if(userAuthorized) {
+        if (userAuthorized) {
             resp.status(200).send({
                 user: userAuthorized,
-                token: jwt.sign({user: userAuthorized}, variables.Security.publicKey)
+                token: jwt.sign({ user: userAuthorized }, variables.Security.publicKey)
             })
         } else {
-            resp.status(400).send({message: "Usuário e senha incorretos!"})
+            resp.status(400).send({ message: "Usuário e senha incorretos!" })
         }
     }
 
@@ -51,7 +47,7 @@ class userController {
         validation.isRequired(req.body.email, 'Informe o Email')
         validation.isEmail(req.body.email, 'O email informado não é válido')
         validation.isRequired(req.body.password, 'Informe a senha')
-        validation.isRequired(req.body.confirmedPassword, 'Confirme a senha')              
+        validation.isRequired(req.body.confirmedPassword, 'Confirme a senha')
         validation.isTrue(req.body.password != req.body.confirmedPassword, 'As senha informadas não são iguais')
         validation.isRequired(req.body.cpf, 'Infome o CPF')
         validation.isCpf(req.body.cpf, 'CPF inválido')
@@ -66,8 +62,8 @@ class userController {
             validation.isTrue(isUserCpfExist.name != undefined, `O cpf informado já está cadastrado!`)
         }
 
-        if(req.body.password) {
-            req.body.password = md5(req.body.password)   
+        if (req.body.password) {
+            req.body.password = md5(req.body.password)
         }
 
         controllerBase.post(repository, validation, req, resp)
@@ -82,11 +78,12 @@ class userController {
         validation.isCpf(req.body.cpf, 'CPF inválido')
         validation.isRequired(req.body.condominium, 'Informe o condominium')
         validation.isRequired(req.params.id, 'É necessário informar um ID a ser atualizado')
+        validation.isNotObjectId(req.params.id, 'Usuário não encontrado')
 
         let IsUserEmailExist = await repository.isEmailExist(req.body.email)
         if (IsUserEmailExist) {
             validation.isTrue(
-                (IsUserEmailExist.name != undefined) && 
+                (IsUserEmailExist.name != undefined) &&
                 (IsUserEmailExist._id != req.params.id),
                 `Já existe o email ${req.body.email} cadastrado!`)
         }
@@ -94,16 +91,20 @@ class userController {
         controllerBase.put(repository, validation, req, resp)
     }
 
-    async get(req, resp) {     
-        return await controllerBase.get(repository, req, resp)                
+    async get(req, resp) {
+        return await controllerBase.get(repository, req, resp)
     }
 
     async getById(req, resp) {
-        return await controllerBase.getById(repository, req, resp)
+        validation.clear()            
+        validation.isNotObjectId(req.params.id, 'Usuário não encontrado')
+        return await controllerBase.getById(repository, validation, req, resp)
     }
 
     async delete(req, resp) {
-        return await controllerBase.delete(repository, req, resp)
+        validation.clear()            
+        validation.isNotObjectId(req.params.id, 'Usuário não encontrado')
+        return await controllerBase.delete(repository, validation, req, resp)
     }
 }
 

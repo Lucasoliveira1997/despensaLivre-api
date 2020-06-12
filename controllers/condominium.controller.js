@@ -35,6 +35,7 @@ class condominiumController {
         validation.isRequired(req.body.neighborhood, "Informe o bairro")
         validation.isRequired(req.body.responsible, "Informe o responsável pelo condomínio")
         validation.isRequired(req.body.phone, "Informe um telefone")
+        validation.isNotObjectId(req.params.id, 'Condomínio não encontrado')
 
         controllerBase.put(repository, validation, req, resp)
     }
@@ -44,11 +45,15 @@ class condominiumController {
     }
 
     async getById(req, resp) {
-        return await controllerBase.getById(repository, req, resp)
+        validation.clear()            
+        validation.isNotObjectId(req.params.id, 'Condomínio não encontrado')
+        return await controllerBase.getById(repository, validation, req, resp)
     }
 
     async delete(req, resp) {
-        return await controllerBase.delete(repository, req, resp)
+        validation.clear()            
+        validation.isNotObjectId(req.params.id, 'Condomínio não encontrado')
+        return await controllerBase.delete(repository, validation, req, resp)
     }
 }
 
