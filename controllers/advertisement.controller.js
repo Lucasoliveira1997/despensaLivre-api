@@ -31,6 +31,7 @@ class advertisementController {
         validation.isRequired(req.body.user, 'Informe o usuário que está fazendo a venda')
         validation.isRequired(req.body.unitPrice, 'Informe o preço unitário em R$')
         validation.isRequired(req.body.totalPrice, 'Informe o preço total')
+        validation.isNotObjectId(req.params.id, 'Anúncio não encontrado')
 
         if(req.body.unitPrice || req.body.totalPrice) {
             validation.isTrue(req.body.unitPrice <= 0 || req.body.totalPrice <= 0, 'O preço não pode ser R4 0.00 ou negativo')
@@ -44,11 +45,15 @@ class advertisementController {
     }
 
     async getById(req, resp) {
-        return await controllerBase.getById(repository, req, resp)
+        validation.clear()            
+        validation.isNotObjectId(req.params.id, 'Anúncio não encontrado')
+        return await controllerBase.getById(repository, validation, req, resp)
     }
 
     async delete(req, resp) {
-        return await controllerBase.delete(repository, req, resp)
+        validation.clear()            
+        validation.isNotObjectId(req.params.id, 'Anúncio não encontrado')
+        return await controllerBase.delete(repository, validation, req, resp)
     }
 
 }
