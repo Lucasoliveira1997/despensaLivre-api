@@ -9,7 +9,6 @@ const variables = require('./configuration/variables')
 const userRoute = require('../routes/user.route')
 const condominiumRoute = require('../routes/condominium.route')
 const productRoute = require('../routes/product.route')
-const walletRoute = require('../routes/wallet.route')
 const advertisementRoute = require('../routes/advertisement.route')
 
 const app = express()
@@ -31,7 +30,6 @@ mongoose.set('useCreateIndex', true)
 app.use('/api/users', userRoute)
 app.use('/api/condominiums', condominiumRoute)
 app.use('/api/products', productRoute)
-app.use('/api/wallets', walletRoute)
 app.use('/api/advertisements', advertisementRoute)
 
 module.exports = app

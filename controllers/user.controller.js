@@ -101,6 +101,40 @@ class userController {
         return await controllerBase.getById(repository, validation, req, resp)
     }
 
+    async getWallet(req, resp) {
+        validation.clear()            
+        validation.isNotObjectId(req.params.id, 'Carteira não encontrada')
+
+        try {
+            let retorno = await verifyValidation(validation, resp)
+            if (retorno.statusCode === 400) return
+
+            let wallet = await repository.getWallet(req.params.id)
+            resp.status(200).send(wallet)            
+        } catch (error) {
+            console.log('erro no getWallet', error)      
+            resp.status(500).send({message: `erro no processamento: motivos`, erro: error})      
+        }
+
+    }
+
+    async putWallet(req, resp) {
+        validation.clear()            
+        validation.isTrue(req.body.availableBalance <= 0, 'Valor informado inválido')
+        validation.isNotObjectId(req.params.id, 'Carteira não encontrada')
+
+        try {
+            let retorno = await verifyValidation(validation, resp)
+            if (retorno.statusCode === 400) return
+
+            let result = await repository._base.update(req.params.id, req.body)
+            resp.status(202).send(result)
+        } catch(error) {
+            console.log('erro no putWallet', error)
+            resp.status(500).send({message: `erro no processamento: motivos`, erro: error})
+        }
+    }
+
     async delete(req, resp) {
         validation.clear()            
         validation.isNotObjectId(req.params.id, 'Usuário não encontrado')

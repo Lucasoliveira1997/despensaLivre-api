@@ -13,4 +13,7 @@ router.get('/', _auth,  _ctrl.get)
 router.get('/:id', _auth,  _ctrl.getById)
 router.delete('/:id', _auth,  _ctrl.delete)
 
+router.get('/:id/wallet', _auth, _ctrl.getWallet)
+router.put('/:id/wallet', _auth, _ctrl.putWallet)
+
 module.exports = router
