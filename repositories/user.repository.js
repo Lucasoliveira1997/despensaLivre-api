@@ -37,6 +37,11 @@ class userRepository {
     async getById(id) {
         return await this._base.getById(id)
     }
+    
+    async getWallet(id) {
+        let result = await this._base._model.findById(id, '+wallet')
+        return result.wallet
+    }
 
     async delete(id) {
         return await this._base.delete(id)
