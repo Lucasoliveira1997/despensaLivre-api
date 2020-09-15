@@ -35,6 +35,7 @@ class controllerBase {
     async get(repository, req, resp) {
         try {
             let list = await repository.getAll()
+            
             resp.status(200).send(list)
         } catch (error) {
             console.log('erro no get', error)    

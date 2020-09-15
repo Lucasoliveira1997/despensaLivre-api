@@ -92,6 +92,10 @@ class userController {
     }
 
     async get(req, resp) {
+        // const items = list.map(item => {
+        //     return Object.assign({_links: {wallet: 'wallet link'}}, item.toJSON())
+        // })
+
         return await controllerBase.get(repository, req, resp)
     }
 

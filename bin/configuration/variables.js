@@ -7,12 +7,9 @@ const variables = {
 
     database: {
         connection: process.env.connection || 'mongodb://despensalivre:RBvqSwXZY5BcNZ39@cluster0-shard-00-00-ffuac.mongodb.net:27017,cluster0-shard-00-01-ffuac.mongodb.net:27017,cluster0-shard-00-02-ffuac.mongodb.net:27017/despensalivretest?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
-        //'mongodb://despensalivre:RBvqSwXZY5BcNZ39@cluster0-shard-00-00-ffuac.mongodb.net:27017,cluster0-shard-00-01-ffuac.mongodb.net:27017,cluster0-shard-00-02-ffuac.mongodb.net:27017/despensalivretest?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority',
         options: {
-            //reconnectTries: Number.MAX_VALUE, 
-            //reconnectInterval: 500, poolSize: 5, 
-            useNewUrlParser: true, 
-            //useUnifiedTopology: true        
+            useNewUrlParser: true,
+            useUnifiedTopology: true
         }
     },
 
